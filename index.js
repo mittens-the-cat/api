@@ -2,11 +2,23 @@ if (process.env.NODE_ENV === 'development') {
 	require('dotenv').config()
 }
 
-const express = require('express')
-const cors = require('cors')
-const path = require('path')
-const logger = require('morgan')
 const bodyParser = require('body-parser')
+const cors = require('cors')
+const express = require('express')
+const logger = require('morgan')
+const mongoose = require('mongoose')
+
+mongoose.Promise = Promise
+
+mongoose.connect(
+	process.env.MONGODB_URI,
+	{
+		useMongoClient: true
+	},
+	err => {
+		if (err) throw err
+	}
+)
 
 const app = express()
 
@@ -15,8 +27,10 @@ app.use(cors())
 app.use(bodyParser.json())
 
 const index = require('./routes/index')
+const users = require('./routes/users')
 
-app.use('/', index)
+app.use(['/', '/v1'], index)
+app.use('/v1/users', users)
 
 app.use((req, res, next) => {
 	let err = new Error()
