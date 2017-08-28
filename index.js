@@ -1,5 +1,5 @@
 if (process.env.NODE_ENV === 'development') {
-  require('dotenv').config()
+	require('dotenv').config()
 }
 
 const express = require('express')
@@ -19,12 +19,12 @@ const index = require('./routes/index')
 app.use('/', index)
 
 app.use((req, res, next) => {
-  let err = new Error()
+	let err = new Error()
 
-  err.message = 'Not Found'
-  err.status = 404
+	err.message = 'Not Found'
+	err.status = 404
 
-  next(err)
+	next(err)
 })
 
 app.use((err, req, res, next) => res.status(err.status || 500).send(err))
