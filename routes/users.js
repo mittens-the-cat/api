@@ -7,7 +7,7 @@ const { user } = require('../schemas')
 const createUser = {
   method: 'POST',
   schema: user,
-  url: '/users',
+  url: '/',
   async handler(request) {
     const { deviceToken, githubToken } = get(request, 'body.user')
 
