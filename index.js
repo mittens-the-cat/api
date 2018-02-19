@@ -11,9 +11,10 @@ mongoose.Promise = global.Promise
 
 fastify.use(cors)
 
-const index = require('./routes')
+const { home, users } = require('./routes')
 
-fastify.register(index)
+fastify.register(home)
+fastify.register(users)
 
 fastify.listen(PORT, '0.0.0.0', err => {
   if (err) {
