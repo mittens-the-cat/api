@@ -11,9 +11,18 @@ const createUser = {
   async handler(request) {
     const { deviceToken, githubToken } = get(request, 'body.user')
 
-    const { id } = await User.verify(githubToken)
+    const exists = await User.verify(githubToken)
+
+    const { _id } = exists
+
+    if (_id) {
+      return {
+        user: exists
+      }
+    }
 
     const authToken = await token.generate(githubToken + Date.now())
+    const { id } = exists
 
     const user = new User({
       authToken,

@@ -51,6 +51,16 @@ class User {
     const json = await response.json()
 
     if (response.status === 200) {
+      const { id } = json
+
+      const user = await this.findOne()
+        .where('_id')
+        .eq(id)
+
+      if (user) {
+        return user
+      }
+
       return json
     } else {
       throw error(json.message)
