@@ -9,8 +9,10 @@
   "license": "MIT",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "dev": "nodemon --exec 'node -r dotenv/config' index.js",
     "lint": "xo ",
     "precommit": "lint-staged",
+    "start": "node -r newrelic index.js",
     "test": "npm run lint && npm run test-coverage",
     "test-coverage": "cross-env NODE_ENV=test nyc ava"
   },
