@@ -1,13 +1,13 @@
 const { get } = require('lodash')
 
-const { error, token } = require('../lib')
+const { auth, error, token } = require('../lib')
 const { User } = require('../models')
 const { user } = require('../schemas')
 
 const createUser = {
   method: 'POST',
   schema: user,
-  url: '/',
+  url: '/users',
   async handler(request) {
     const { deviceToken, githubToken } = get(request, 'body.user')
 
@@ -16,6 +16,10 @@ const createUser = {
     const { _id } = exists
 
     if (_id) {
+      exists.authToken = await token.generate(githubToken + Date.now())
+
+      await exists.save()
+
       return {
         user: exists
       }
@@ -43,8 +47,23 @@ const createUser = {
   }
 }
 
+const getMe = {
+  method: 'GET',
+  schema: user,
+  url: '/users/me',
+  beforeHandler: auth,
+  async handler(request) {
+    const { user } = request
+
+    return {
+      user
+    }
+  }
+}
+
 module.exports = (fastify, opts, next) => {
   fastify.route(createUser)
+  fastify.route(getMe)
 
   next()
 }
