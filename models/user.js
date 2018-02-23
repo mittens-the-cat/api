@@ -37,8 +37,16 @@ schema.index(
 )
 
 class User {
+  get push() {
+    return Boolean(this.notifications) && this.deviceToken
+  }
+
   toggleNotifications(deviceToken) {
     this.deviceToken = deviceToken || null
+
+    if (!deviceToken) {
+      this.notifications = false
+    }
 
     return this.save()
   }
