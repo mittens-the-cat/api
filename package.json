@@ -23,6 +23,7 @@
     "lodash.get": "^4.4.2",
     "moment": "^2.20.1",
     "mongoose": "^5.0.7",
+    "newrelic": "^2.8.0",
     "node-fetch": "^2.0.0"
   },
   "devDependencies": {
