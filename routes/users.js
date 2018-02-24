@@ -47,6 +47,24 @@ const createUser = {
   }
 }
 
+const updateUser = {
+  method: 'PUT',
+  schema: user,
+  url: '/users/me',
+  beforeHandler: auth,
+  async handler(request) {
+    const { user } = request
+
+    const { deviceToken } = get(request, 'body.user')
+
+    await user.toggleNotifications(deviceToken)
+
+    return {
+      user
+    }
+  }
+}
+
 const getMe = {
   method: 'GET',
   schema: user,
@@ -63,6 +81,7 @@ const getMe = {
 
 module.exports = (fastify, opts, next) => {
   fastify.route(createUser)
+  fastify.route(updateUser)
   fastify.route(getMe)
 
   next()
