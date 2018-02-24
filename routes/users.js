@@ -1,7 +1,11 @@
 const { get } = require('lodash')
 
-const { auth, error, token } = require('../lib')
-const { User } = require('../models')
+const auth = require('../lib/auth')
+const error = require('../lib/error')
+const token = require('../lib/token')
+
+const User = require('../models/user')
+
 const { user } = require('../schemas')
 
 const createUser = {
@@ -40,6 +44,8 @@ const createUser = {
     }
 
     await user.save()
+
+    await notifications.add(user)
 
     return {
       user

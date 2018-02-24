@@ -17,12 +17,21 @@ fastify.register(home)
 fastify.register(github)
 fastify.register(users)
 
-fastify.listen(PORT, '0.0.0.0', err => {
+fastify.listen(PORT, '0.0.0.0', async err => {
   if (err) {
     throw err
   }
 
   console.log(`server listening on ${fastify.server.address().port}`)
+
+  const User = require('./models/user')
+  const notifications = require('./lib/notifications')
+
+  const users = await User.find().select(
+    'notifications githubToken deviceToken lastNotified'
+  )
+
+  notifications.start(users)
 })
 
 module.exports = fastify

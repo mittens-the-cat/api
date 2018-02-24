@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const fetch = require('node-fetch')
 
-const { error } = require('../lib')
+const error = require('../lib/error')
+const notifications = require('../lib/notifications')
 
 const schema = new mongoose.Schema({
   _id: {
@@ -19,6 +20,10 @@ const schema = new mongoose.Schema({
   },
   authToken: {
     type: String
+  },
+  lastNotified: {
+    type: Date,
+    default: new Date(1970)
   },
   created: {
     type: Date,
@@ -44,6 +49,12 @@ class User {
   toggleNotifications(deviceToken) {
     this.notifications = !!deviceToken
     this.deviceToken = deviceToken || null
+
+    if (this.notifications) {
+      notifications.update(this)
+    } else {
+      notifications.remove(this)
+    }
 
     return this.save()
   }

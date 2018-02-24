@@ -19,9 +19,9 @@
   "dependencies": {
     "cors": "^2.8.4",
     "fastify": "^1.0.0-rc.2",
-    "firebase-admin": "^5.9.0",
     "jsonwebtoken": "^8.1.1",
     "lodash.get": "^4.4.2",
+    "moment": "^2.20.1",
     "mongoose": "^5.0.7",
     "node-fetch": "^2.0.0"
   },
