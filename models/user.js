@@ -42,11 +42,8 @@ class User {
   }
 
   toggleNotifications(deviceToken) {
+    this.notifications = !!deviceToken
     this.deviceToken = deviceToken || null
-
-    if (!deviceToken) {
-      this.notifications = false
-    }
 
     return this.save()
   }
