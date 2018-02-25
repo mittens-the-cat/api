@@ -2,6 +2,7 @@ const { get } = require('lodash')
 
 const auth = require('../lib/auth')
 const error = require('../lib/error')
+const notifications = require('../lib/notifications')
 const token = require('../lib/token')
 
 const User = require('../models/user')
