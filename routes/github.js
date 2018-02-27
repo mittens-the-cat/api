@@ -1,15 +1,27 @@
-const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = process.env
+const {
+  GITHUB_CLIENT_ID_ANDROID,
+  GITHUB_CLIENT_SECRET_ANDROID,
+  GITHUB_CLIENT_ID_IOS,
+  GITHUB_CLIENT_SECRET_IOS
+} = process.env
 
 const index = {
   method: 'GET',
   url: '/github',
   async handler() {
     return {
-      id: GITHUB_CLIENT_ID,
-      secret: GITHUB_CLIENT_SECRET,
+      android: {
+        id: GITHUB_CLIENT_ID_ANDROID,
+        secret: GITHUB_CLIENT_SECRET_ANDROID,
+        redirect: 'http://localhost/github'
+      },
+      ios: {
+        id: GITHUB_CLIENT_ID_IOS,
+        secret: GITHUB_CLIENT_SECRET_IOS,
+        redirect: 'github://oauth'
+      },
       scope: 'notifications',
-      base: 'https://github.com/login/oauth',
-      redirect: 'github://oauth'
+      base: 'https://github.com/login/oauth'
     }
   }
 }
