@@ -13,12 +13,12 @@ const index = {
       android: {
         id: GITHUB_CLIENT_ID_ANDROID,
         secret: GITHUB_CLIENT_SECRET_ANDROID,
-        redirect: 'http://localhost/github'
+        redirect: 'http://localhost/mittens'
       },
       ios: {
         id: GITHUB_CLIENT_ID_IOS,
         secret: GITHUB_CLIENT_SECRET_IOS,
-        redirect: 'github://oauth'
+        redirect: 'mittens://oauth'
       },
       scope: 'notifications',
       base: 'https://github.com/login/oauth'
