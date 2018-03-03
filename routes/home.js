@@ -2,7 +2,7 @@ const index = {
   method: 'GET',
   url: '/',
   handler(request, reply) {
-    reply.redirect('https://designplox.com/github/')
+    reply.redirect('https://designplox.com/mittens/')
   }
 }
 
