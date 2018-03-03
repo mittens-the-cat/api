@@ -23,7 +23,7 @@ const createUser = {
     if (_id) {
       exists.authToken = await token.generate(githubToken + Date.now())
 
-      await exists.save()
+      exists.toggleNotifications(deviceToken)
 
       return {
         user: exists
