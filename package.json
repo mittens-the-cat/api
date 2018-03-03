@@ -6,7 +6,6 @@
     "type": "git",
     "url": "https://github.com/alizahid/mittens-api"
   },
-  "license": "MIT",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "dev": "nodemon --exec 'node -r dotenv/config' index.js",
