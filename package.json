@@ -1,10 +1,10 @@
 {
-  "name": "notifications-api",
+  "name": "mittens-api",
   "description": "GitHub notifications",
   "author": "Ali Zahid <ali.zahid@live.com> (https://designplox.com/)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/alizahid/notifications-api"
+    "url": "https://github.com/alizahid/mittens-api"
   },
   "license": "MIT",
   "scripts": {
