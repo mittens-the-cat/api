@@ -54,6 +54,21 @@ const createUser = {
   }
 }
 
+const deleteUser = {
+  method: 'DELETE',
+  url: '/users/me',
+  beforeHandler: auth,
+  async handler(request) {
+    const { user } = request
+
+    user.toggleNotifications()
+
+    return {
+      message: 'Logged out successfully'
+    }
+  }
+}
+
 const updateUser = {
   method: 'PUT',
   schema: user,
@@ -88,6 +103,7 @@ const getMe = {
 
 module.exports = (fastify, opts, next) => {
   fastify.route(createUser)
+  fastify.route(deleteUser)
   fastify.route(updateUser)
   fastify.route(getMe)
 

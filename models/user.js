@@ -41,6 +41,8 @@ schema.index(
   }
 )
 
+schema.post('remove', user => notifications.remove(user))
+
 class User {
   get push() {
     return Boolean(this.notifications) && this.deviceToken
