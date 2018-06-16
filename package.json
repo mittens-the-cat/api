@@ -1,7 +1,13 @@
 {
   "name": "mittens-api",
   "description": "GitHub notifications",
-  "author": "Ali Zahid <ali.zahid@live.com> (https://designplox.com/)",
+  "license": "UNLICENSED",
+  "private": true,
+  "author": {
+    "name": "Ali Zahid",
+    "email": "ali.zahid@live.com",
+    "url": "https://designplox.com"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/alizahid/mittens-api"
@@ -9,7 +15,7 @@
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "dev": "nodemon --exec 'node -r dotenv/config' index.js",
-    "lint": "xo ",
+    "lint": "xo",
     "precommit": "lint-staged",
     "start": "node -r newrelic index.js",
     "test": "npm run lint && npm run test-coverage",
@@ -17,33 +23,32 @@
   },
   "dependencies": {
     "cors": "^2.8.4",
-    "fastify": "^1.1.1",
-    "jsonwebtoken": "^8.2.0",
+    "fastify": "^1.6.0",
+    "jsonwebtoken": "^8.3.0",
     "lodash.get": "^4.4.2",
-    "moment": "^2.21.0",
-    "mongoose": "^5.0.10",
-    "newrelic": "^3.2.0",
-    "node-fetch": "^2.1.1"
+    "moment": "^2.22.2",
+    "mongoose": "^5.1.5",
+    "newrelic": "^4.1.5",
+    "node-fetch": "^2.1.2"
   },
   "devDependencies": {
-    "auto-bind": "^1.2.0",
     "ava": "^0.25.0",
-    "codecov": "^3.0.0",
-    "cross-env": "^5.1.4",
-    "dotenv": "^5.0.1",
-    "eslint": "^4.19.0",
+    "codecov": "^3.0.2",
+    "cross-env": "^5.2.0",
+    "dotenv": "^6.0.0",
+    "eslint": "^4.19.1",
     "eslint-config-prettier": "latest",
     "eslint-plugin-prettier": "latest",
     "husky": "^0.14.3",
-    "lint-staged": "^7.0.0",
-    "nyc": "^11.6.0",
-    "prettier": "^1.11.1",
+    "lint-staged": "^7.2.0",
+    "nyc": "^12.0.2",
+    "prettier": "^1.13.5",
     "xo": "latest"
   },
   "engines": {
-    "node": "9.8.0",
-    "npm": "5.6.0",
-    "yarn": "1.5.1"
+    "node": "10.3.0",
+    "npm": "6.1.0",
+    "yarn": "1.7.0"
   },
   "ava": {
     "failFast": true,

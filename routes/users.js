@@ -24,7 +24,10 @@ const createUser = {
       exists.authToken = await token.generate(githubToken + Date.now())
       exists.githubToken = githubToken
 
-      exists.toggleNotifications(deviceToken)
+      await exists.update({
+        deviceToken,
+        notifications: true
+      })
 
       return {
         user: exists
@@ -62,7 +65,13 @@ const deleteUser = {
   async handler(request) {
     const { user } = request
 
-    user.toggleNotifications()
+    await user.update({
+      badge: false,
+      deviceToken: null,
+      notifications: false
+    })
+
+    await notifications.remove(user)
 
     return {
       message: 'Logged out successfully'
@@ -78,9 +87,9 @@ const updateUser = {
   async handler(request) {
     const { user } = request
 
-    const { deviceToken } = get(request, 'body.user')
+    const data = get(request, 'body.user')
 
-    await user.toggleNotifications(deviceToken)
+    await user.update(data)
 
     return {
       user

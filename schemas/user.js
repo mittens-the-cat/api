@@ -12,6 +12,9 @@ module.exports = {
             notifications: {
               type: 'boolean'
             },
+            badge: {
+              type: 'boolean'
+            },
             githubToken: {
               type: 'string'
             },

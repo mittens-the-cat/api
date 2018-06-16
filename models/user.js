@@ -8,6 +8,10 @@ const schema = new mongoose.Schema({
   _id: {
     type: Number
   },
+  badge: {
+    default: true,
+    type: Boolean
+  },
   notifications: {
     default: true,
     type: Boolean
@@ -48,9 +52,18 @@ class User {
     return Boolean(this.notifications) && this.deviceToken
   }
 
-  toggleNotifications(deviceToken) {
-    this.notifications = !!deviceToken
-    this.deviceToken = deviceToken || null
+  update(data) {
+    if (data.badge !== undefined) {
+      this.badge = data.badge
+    }
+
+    if (data.notifications !== undefined) {
+      this.notifications = data.notifications
+    }
+
+    if (data.deviceToken !== undefined) {
+      this.deviceToken = data.deviceToken
+    }
 
     if (this.notifications) {
       notifications.update(this)
