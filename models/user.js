@@ -65,6 +65,10 @@ class User {
       this.deviceToken = data.deviceToken
     }
 
+    if (data.lastNotified !== undefined) {
+      this.lastNotified = data.lastNotified
+    }
+
     if (this.notifications) {
       notifications.update(this)
     } else {
