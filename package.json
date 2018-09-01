@@ -16,49 +16,41 @@
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "dev": "nodemon --exec 'node -r dotenv/config' index.js",
     "lint": "xo",
-    "precommit": "lint-staged",
     "start": "node -r newrelic index.js",
     "test": "npm run lint && npm run test-coverage",
     "test-coverage": "cross-env NODE_ENV=test nyc ava"
   },
   "dependencies": {
     "cors": "^2.8.4",
-    "fastify": "^1.6.0",
+    "fastify": "^1.11.1",
     "jsonwebtoken": "^8.3.0",
     "lodash.get": "^4.4.2",
     "moment": "^2.22.2",
-    "mongoose": "^5.1.5",
-    "newrelic": "^4.1.5",
-    "node-fetch": "^2.1.2"
+    "mongoose": "^5.2.12",
+    "newrelic": "^4.8.1",
+    "node-fetch": "^2.2.0"
   },
   "devDependencies": {
     "ava": "^0.25.0",
-    "codecov": "^3.0.2",
+    "codecov": "^3.0.4",
     "cross-env": "^5.2.0",
     "dotenv": "^6.0.0",
-    "eslint": "^4.19.1",
+    "eslint": "^5.5.0",
     "eslint-config-prettier": "latest",
     "eslint-plugin-prettier": "latest",
-    "husky": "^0.14.3",
-    "lint-staged": "^7.2.0",
-    "nyc": "^12.0.2",
-    "prettier": "^1.13.5",
+    "husky": "^1.0.0-rc.13",
+    "nyc": "^13.0.1",
+    "prettier": "^1.14.2",
+    "pretty-quick": "^1.6.0",
     "xo": "latest"
   },
   "engines": {
-    "node": "10.3.0",
-    "npm": "6.1.0",
-    "yarn": "1.7.0"
+    "node": "10.9.0",
+    "yarn": "1.9.4"
   },
   "ava": {
     "failFast": true,
     "verbose": true
-  },
-  "lint-staged": {
-    "*.js": [
-      "prettier --write --single-quote --no-semi --trailing-comma none",
-      "git add"
-    ]
   },
   "main": "index.js",
   "nyc": {
@@ -103,5 +95,10 @@
     },
     "space": true,
     "semicolon": false
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }
