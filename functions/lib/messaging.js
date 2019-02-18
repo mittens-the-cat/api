@@ -9,6 +9,13 @@ class Messaging {
           notification: {
             body,
             title: repository
+          },
+          apns: {
+            payload: {
+              aps: {
+                badge: notifications.length
+              }
+            }
           }
         })
       )
