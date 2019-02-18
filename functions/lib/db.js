@@ -11,7 +11,6 @@ class Database {
       .firestore()
       .collection('users')
       .where('github_token', '>', '')
-      .where('notifications', '==', true)
       .get()
 
     return snapshot.docs.map(user => user.data())
