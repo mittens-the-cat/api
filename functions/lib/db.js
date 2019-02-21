@@ -10,7 +10,7 @@ class Database {
     const snapshot = await admin
       .firestore()
       .collection('users')
-      .where('github_token', '>', '')
+      .where('push_token', '>', '')
       .get()
 
     return snapshot.docs.map(user => user.data())
