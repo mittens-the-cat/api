@@ -6,14 +6,14 @@ const db = require('./lib/db')
 const github = require('./lib/github')
 const messaging = require('./lib/messaging')
 
-exports.auth = functions.https.onRequest(async (request, response) => {
-  const {
-    body: { code }
-  } = request
+exports.auth = functions.https.onCall(async data => {
+  const { code } = data
 
-  const data = await github.auth(code)
+  const { access_token } = await github.auth(code)
 
-  response.send(data)
+  return {
+    access_token
+  }
 })
 
 exports.fetch = functions.https.onRequest(async (request, response) => {
