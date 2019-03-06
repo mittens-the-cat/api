@@ -6,6 +6,16 @@ const db = require('./lib/db')
 const github = require('./lib/github')
 const messaging = require('./lib/messaging')
 
+exports.auth = functions.https.onRequest(async (request, response) => {
+  const {
+    body: { code }
+  } = request
+
+  const data = await github.auth(code)
+
+  response.send(data)
+})
+
 exports.fetch = functions.https.onRequest(async (request, response) => {
   const users = await db.getUsers()
 

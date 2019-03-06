@@ -1,7 +1,25 @@
+const functions = require('firebase-functions')
 const fetch = require('node-fetch')
 const moment = require('moment')
 
 class GitHub {
+  async auth(code) {
+    const {
+      github: { id, secret }
+    } = functions.config()
+
+    const response = await fetch(
+      `https://github.com/login/oauth/access_token?client_id=${id}&client_secret=${secret}&code=${code}`,
+      {
+        headers: {
+          accept: 'application/json'
+        }
+      }
+    )
+
+    return response.json()
+  }
+
   async fetch(token, lastUpdated = moment('2008-02-08')) {
     const response = await fetch('https://api.github.com/notifications', {
       headers: {
