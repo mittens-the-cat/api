@@ -1,12 +1,12 @@
-const functions = require('firebase-functions')
+import { https } from 'firebase-functions'
+import moment from 'moment'
 
-const moment = require('moment')
+import db from './lib/db'
+import github from './lib/github'
+import messaging from './lib/messaging'
+import { User } from './types'
 
-const db = require('./lib/db')
-const github = require('./lib/github')
-const messaging = require('./lib/messaging')
-
-exports.auth = functions.https.onCall(async data => {
+export const auth = https.onCall(async data => {
   const { code } = data
 
   const { access_token } = await github.auth(code)
@@ -16,25 +16,23 @@ exports.auth = functions.https.onCall(async data => {
   }
 })
 
-exports.fetch = functions.https.onRequest(async (request, response) => {
-  const users = await db.getUsers()
+export const fetch = https.onRequest(async (request, response) => {
+  const users: User[] = await db.getUsers()
 
   await Promise.all(
     users.map(async ({ github_token, push_token, updated, username }) => {
       try {
-        const time = moment().toISOString()
-
         const notifications = await github.fetch(github_token, updated)
 
         await db.updateUser(username, {
-          updated: time
+          updated: moment().toISOString()
         })
 
         if (notifications.length > 0) {
           await messaging.send(push_token, notifications)
         }
       } catch (error) {
-        console.error(error)
+        await db.deleteUser(username)
       }
     })
   )
