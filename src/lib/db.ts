@@ -1,4 +1,4 @@
-import { firestore, initializeApp } from 'firebase-admin'
+import { auth, firestore, initializeApp } from 'firebase-admin'
 import { config } from 'firebase-functions'
 
 import { User, UserUpdate } from '../types'
@@ -26,14 +26,13 @@ class Database {
       })
   }
 
-  async deleteUser(username: string): Promise<void> {
+  async deleteUser(uid: string, username: string): Promise<void> {
+    await auth().deleteUser(uid)
+
     await firestore()
       .collection('users')
       .doc(username)
-      .update({
-        github_token: firestore.FieldValue.delete(),
-        push_token: firestore.FieldValue.delete()
-      })
+      .delete()
   }
 }
 

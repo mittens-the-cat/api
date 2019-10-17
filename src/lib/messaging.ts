@@ -1,10 +1,10 @@
-import * as admin from 'firebase-admin'
+import { messaging } from 'firebase-admin'
 
 import { Notification } from '../types'
 
 class Messaging {
   async send(token: string, notifications: Notification[]): Promise<void> {
-    await admin.messaging().sendAll([
+    await messaging().sendAll([
       ...notifications.map(({ body, id, repository }) => ({
         android: {
           collapseKey: id
@@ -26,6 +26,19 @@ class Messaging {
         token
       }))
     ])
+  }
+
+  async badge(token: string, badge: number): Promise<void> {
+    await messaging().send({
+      apns: {
+        payload: {
+          aps: {
+            badge
+          }
+        }
+      },
+      token
+    })
   }
 }
 

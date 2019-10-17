@@ -20,18 +20,14 @@ class GitHub {
     return data
   }
 
-  async fetch(
-    token: string,
-    since = moment('2008-02-08').toISOString()
-  ): Promise<Notification[]> {
+  async getNotifications(token: string): Promise<Notification[]> {
     const { data, status } = await axios.request<GitHubNotification[]>({
       headers: {
         authorization: `token ${token}`,
         'user-agent': 'Mittens'
       },
       params: {
-        all: true,
-        since
+        all: true
       },
       url: 'https://api.github.com/notifications'
     })
@@ -45,13 +41,15 @@ class GitHub {
         id,
         repository: { full_name },
         subject: { title, type, url },
+        unread,
         updated_at
       }) => ({
         body: title,
         id,
         repository: full_name,
         type,
-        updated: moment(updated_at),
+        unread,
+        updated_at: moment(updated_at),
         url
       })
     )

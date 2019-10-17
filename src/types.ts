@@ -1,22 +1,23 @@
+import { Moment } from 'moment'
+
 export interface Notification {
   id: string
   body: string
   repository: string
+  unread: boolean
+  updated_at: Moment
 }
 
 export interface User {
   github_token: string
   push_token: string
   uid: string
-  updated: string
   username: string
+  updated_at: string
 }
 
 export interface UserUpdate {
-  github_token?: string
-  push_token?: string
-  updated?: string
-  username?: string
+  updated_at?: string
 }
 
 export interface GitHubAuth {
@@ -33,5 +34,6 @@ export interface GitHubNotification {
     type: string
     url: string
   }
+  unread: boolean
   updated_at: string
 }
