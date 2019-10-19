@@ -1,5 +1,5 @@
 import axios from 'axios'
-import functions from 'firebase-functions'
+import { config } from 'firebase-functions'
 import moment from 'moment'
 
 import { GitHubAuth, GitHubNotification, Notification } from '../types'
@@ -8,7 +8,7 @@ class GitHub {
   async auth(code: string): Promise<GitHubAuth> {
     const {
       github: { id, secret }
-    } = functions.config()
+    } = config()
 
     const { data } = await axios.request<GitHubAuth>({
       headers: {
