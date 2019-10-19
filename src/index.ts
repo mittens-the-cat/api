@@ -20,25 +20,29 @@ export const fetch = https.onRequest(async (request, response) => {
   const users: User[] = await db.getUsers()
 
   await Promise.all(
-    users.map(async ({ github_token, push_token, uid, username }) => {
-      try {
-        const notifications = await github.getNotifications(github_token)
+    users.map(
+      async ({ github_token, push_token, uid, updated_at, username }) => {
+        try {
+          const notifications = await github.getNotifications(github_token)
 
-        await db.updateUser(username, {
-          updated_at: moment().toISOString()
-        })
+          await db.updateUser(username, {
+            updated_at: moment().toISOString()
+          })
 
-        const unread = notifications.filter(({ unread }) => unread)
+          const fresh = notifications.filter(notification =>
+            notification.updated_at.isAfter(updated_at)
+          )
 
-        if (unread.length > 0) {
-          await messaging.send(push_token, unread)
-        } else {
-          await messaging.badge(push_token, 0)
+          if (fresh.length > 0) {
+            await messaging.send(push_token, fresh)
+          } else {
+            await messaging.badge(push_token, notifications.length)
+          }
+        } catch (error) {
+          await db.deleteUser(uid, username)
         }
-      } catch (error) {
-        await db.deleteUser(uid, username)
       }
-    })
+    )
   )
 
   response.type('text/plain').send('done')

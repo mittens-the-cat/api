@@ -36,23 +36,25 @@ class GitHub {
       throw new Error('GitHub error')
     }
 
-    return data.map(
-      ({
-        id,
-        repository: { full_name },
-        subject: { title, type, url },
-        unread,
-        updated_at
-      }) => ({
-        body: title,
-        id,
-        repository: full_name,
-        type,
-        unread,
-        updated_at: moment(updated_at),
-        url
-      })
-    )
+    return data
+      .map(
+        ({
+          id,
+          repository: { full_name },
+          subject: { title, type, url },
+          unread,
+          updated_at
+        }) => ({
+          body: title,
+          id,
+          repository: full_name,
+          type,
+          unread,
+          updated_at: moment(updated_at),
+          url
+        })
+      )
+      .filter(({ unread }) => unread)
   }
 }
 
